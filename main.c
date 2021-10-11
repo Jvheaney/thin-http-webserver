@@ -45,8 +45,8 @@ int main(int argc, char const *argv[]) {
 
     int accepted_socket;
     long message_read;
-    char *greeting = "HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 12\n\nHello world!";
 
+    //Generating our response
     HTTP_RESPONSE resp;
     resp.protocol="HTTP/1.1";
     resp.httpCode="200 OK";
@@ -54,6 +54,7 @@ int main(int argc, char const *argv[]) {
     resp.body="What is up?";
     resp.contentLength=strlen(resp.body);
 
+    //Putting it all together
     char *response;
     asprintf(&response, "%s %s\nContent-Type: %s\nContent-Length: %d\n\n%s", resp.protocol, resp.httpCode, resp.contentType, resp.contentLength, resp.body);
 
