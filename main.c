@@ -4,10 +4,11 @@
 #include <stdlib.h>
 #include <netinet/in.h>
 #include <string.h>
+#include "httpstructs.h"
 
 #define PORT 4080
 int main(int argc, char const *argv[]) {
-    
+
     int server_fd;
 
     //We are creating a socket based on AF_INET address family (IPv4), SOCK_STREAM (used by TCP), and 0 as our protocol variation
@@ -44,7 +45,17 @@ int main(int argc, char const *argv[]) {
 
     int accepted_socket;
     long message_read;
-    char *greeting = "Hello world!";
+    char *greeting = "HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 12\n\nHello world!";
+
+    HTTP_RESPONSE resp;
+    resp.protocol="HTTP/1.1";
+    resp.httpCode="200 OK";
+    resp.contentType="text/plain";
+    resp.body="What is up?";
+    resp.contentLength=strlen(resp.body);
+
+    char *response;
+    asprintf(&response, "%s %s\nContent-Type: %s\nContent-Length: %d\n\n%s", resp.protocol, resp.httpCode, resp.contentType, resp.contentLength, resp.body);
 
     //Now we will wait for connections and accept them as they come
     while(1)
@@ -60,8 +71,8 @@ int main(int argc, char const *argv[]) {
         else{
             char buffer[30000] = {0};
             message_read = read(accepted_socket, buffer, 30000);
-            printf("We got a message: %s\n", buffer);
-            write(accepted_socket, greeting, strlen(greeting));
+            printf("We got a message:\n%s\n", buffer);
+            write(accepted_socket, response, strlen(response));
             printf("Sent our greeting! Now lets close the connection.\n");
             close(accepted_socket);
         }
