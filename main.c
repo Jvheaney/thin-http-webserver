@@ -47,11 +47,12 @@ int main(int argc, char const *argv[]) {
     long message_read;
 
     //Generating our response
+    //Going to look into setting different content types and fetching the body from the filesystem
     HTTP_RESPONSE resp;
     resp.protocol="HTTP/1.1";
     resp.httpCode="200 OK";
     resp.contentType="text/plain";
-    resp.body="What is up?";
+    resp.body="What's good?";
     resp.contentLength=strlen(resp.body);
 
     //Putting it all together
