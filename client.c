@@ -25,6 +25,7 @@ int main(int argc, char const *argv[])
     address.sin_family = AF_INET;
     address.sin_port = htons(PORT);
 
+    //Have to get size of address here for our connect
     int addrlen = sizeof(address);
 
     long message_read;
