@@ -55,7 +55,7 @@ int main(int argc, char const *argv[]) {
     resp.body="What's good?";
     resp.contentLength=strlen(resp.body);
 
-    //Putting it all together
+    //Putting it all together to form our REST response
     char *response;
     asprintf(&response, "%s %s\nContent-Type: %s\nContent-Length: %d\n\n%s", resp.protocol, resp.httpCode, resp.contentType, resp.contentLength, resp.body);
 
